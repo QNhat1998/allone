@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiết kế giao diện - Công cụ tạo nội dung AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F9FAFB;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 1.75rem;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+            border: 1px solid #F3F4F6;
+        }
+        .app-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+            border: none;
+            cursor: pointer;
+        }
+        .app-btn-primary {
+            background: #4F46E5;
+            color: white;
+            box-shadow: 0 4px 14px -4px rgba(79, 70, 229, 0.4);
+        }
+        .app-btn-primary:hover {
+            transform: translateY(-2px);
+            background: #4338CA;
+            box-shadow: 0 6px 20px -4px rgba(79, 70, 229, 0.4);
+        }
+        .app-btn-secondary {
+            background-color: #F3F4F6;
+            color: #374151;
+            border: 1px solid #E5E7EB;
+        }
+        .app-btn-secondary:hover {
+            background-color: #E5E7EB;
+            border-color: #D1D5DB;
+        }
+        .app-input, .app-select, .app-textarea {
+            border: 1px solid #D1D5DB;
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            width: 100%;
+            background-color: white;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .app-select {
+            padding-left: 2.5rem; /* Space for icon */
+        }
+        .app-input:focus, .app-select:focus, .app-textarea:focus {
+            outline: none;
+            border-color: #4F46E5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+        }
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            padding: 0.875rem 1rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            color: #4B5563;
+            transition: all 0.2s ease;
+        }
+        .sidebar-item:hover {
+            background-color: #F3F4F6;
+            color: #111827;
+        }
+        .sidebar-item.active {
+            background-color: #4F46E5;
+            color: #FFFFFF;
+            box-shadow: 0 4px 14px -4px rgba(79, 70, 229, 0.4);
+        }
+        .sidebar-item.active svg {
+            stroke: #FFFFFF;
+        }
+        .step-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 9999px;
+            background-color: #EEF2FF;
+            color: #4338CA;
+            font-weight: 700;
+            font-size: 0.875rem;
+            border: 4px solid white;
+            box-shadow: 0 0 0 1px #C7D2FE;
+        }
+        .facebook-preview-card {
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.07), 0 4px 6px -4px rgb(0 0 0 / 0.07);
+        }
+    </style>
+</head>
+<body class="h-screen overflow-hidden">
+
+    <div class="flex h-full bg-gray-50">
+        <!-- Sidebar -->
+        <aside class="w-72 border-r border-gray-200 bg-white p-6 flex flex-col flex-shrink-0">
+            <div class="font-extrabold text-2xl text-indigo-600 p-2 mb-10">ALLONE.AI</div>
+            <nav class="space-y-3">
+                <a href="#" class="sidebar-item">
+                    <svg class="w-6 h-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-item active">
+                    <svg class="w-6 h-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z"></path></svg>
+                    <span>Tạo nội dung</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <svg class="w-6 h-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span>Thư viện</span>
+                </a>
+                <a href="#" class="sidebar-item">
+                    <svg class="w-6 h-6 mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <span>Hướng dẫn</span>
+                </a>
+            </nav>
+            <div class="mt-auto bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                <h3 class="font-bold text-indigo-800">Nâng cấp tài khoản</h3>
+                <p class="text-sm text-indigo-600 mt-1 mb-3">Mở khóa toàn bộ tính năng với gói Pro.</p>
+                <button class="app-btn app-btn-primary w-full text-sm">Xem chi tiết</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-3xl font-bold text-gray-800 mb-2">Tạo Nội Dung Quảng Cáo AI</h1>
+                <p class="text-gray-500 mb-8">Tạo hình ảnh và nội dung độc đáo chỉ trong vài giây.</p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-5 gap-8">
+                    <!-- Left Column: Steps -->
+                    <div class="lg:col-span-3 space-y-6">
+                        <!-- Step 1: Image Generation -->
+                        <div class="card">
+                            <div class="flex items-start">
+                                <div class="step-indicator mr-4">1</div>
+                                <div>
+                                    <h2 class="text-xl font-bold text-gray-800">Tạo hình ảnh</h2>
+                                    <p class="text-gray-500 mb-4">Mô tả ý tưởng của bạn, AI sẽ biến nó thành hiện thực.</p>
+                                </div>
+                            </div>
+                            <div class="pl-12 space-y-4">
+                                <textarea class="app-textarea" rows="4" placeholder="Ví dụ: Một đôi giày thể thao màu trắng đang bay giữa những đám mây, phong cách siêu thực, ánh sáng dịu nhẹ..."></textarea>
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="relative">
+                                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path></svg>
+                                        </div>
+                                        <select class="app-select">
+                                            <option>Chất lượng 1080p</option>
+                                            <option>Chất lượng 720p</option>
+                                        </select>
+                                    </div>
+                                    <div class="relative">
+                                        <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1v4m0 0h-4m4 0l-5-5M4 16v4m0 0h4m-4 0l5-5m11 5v-4m0 0h-4m4 0l-5 5"></path></svg>
+                                        </div>
+                                        <select class="app-select">
+                                            <option>Tỷ lệ 16:9 (Ngang)</option>
+                                            <option>Tỷ lệ 1:1 (Vuông)</option>
+                                            <option>Tỷ lệ 9:16 (Dọc)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4 pt-2">
+                                    <button class="app-btn app-btn-primary flex-1">
+                                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                                        Tạo ảnh AI
+                                    </button>
+                                    <button class="app-btn app-btn-secondary">Tải ảnh lên</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Caption Generation -->
+                        <div class="card">
+                            <div class="flex items-start">
+                                <div class="step-indicator mr-4">2</div>
+                                <div>
+                                    <h2 class="text-xl font-bold text-gray-800">Viết nội dung bài đăng</h2>
+                                    <p class="text-gray-500 mb-4">Cung cấp thêm thông tin để AI viết caption hấp dẫn hơn.</p>
+                                </div>
+                            </div>
+                            <div class="pl-12 space-y-4">
+                                <textarea class="app-textarea" rows="3" placeholder="Ví dụ: Giày X-Runner, giảm giá 30% tuần này, chất liệu thoáng khí..."></textarea>
+                                <button class="app-btn app-btn-primary w-full">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.5L15.232 5.232z"></path></svg>
+                                    Tạo caption
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Preview -->
+                    <div class="lg:col-span-2">
+                        <div class="card sticky top-8">
+                            <h3 class="text-lg font-bold text-gray-800 mb-4">Xem trước bài đăng Facebook</h3>
+                            <div class="w-full bg-white rounded-lg border border-gray-200 p-4 facebook-preview-card">
+                                <div class="flex items-center mb-3">
+                                    <div class="w-10 h-10 bg-gray-200 rounded-full mr-3"><img src="https://placehold.co/40x40/EFEFEF/333333?text=A" class="rounded-full"></div>
+                                    <div>
+                                        <p class="font-bold text-sm text-gray-800">All One Ads</p>
+                                        <p class="text-xs text-gray-500">Vừa xong · <svg class="inline-block w-3 h-3 -mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a8 8 0 100 16 8 8 0 000-16zM9 12a1 1 0 112 0 1 1 0 01-2 0zM9 6a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1z"></path></svg></p>
+                                    </div>
+                                </div>
+                                <p class="text-gray-800 text-sm mb-3">Nội dung caption do AI tạo sẽ xuất hiện ở đây. Sẵn sàng để thu hút hàng ngàn khách hàng tiềm năng! ✨</p>
+                                <div class="bg-gray-100 rounded-lg aspect-w-16 aspect-h-9 flex items-center justify-center">
+                                     <svg class="w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                </div>
+                            </div>
+                            <button class="app-btn app-btn-primary w-full mt-6">
+                                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.022 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"></path></svg>
+                                Đăng Facebook
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
